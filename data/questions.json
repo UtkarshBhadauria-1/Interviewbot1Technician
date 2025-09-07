@@ -1,0 +1,123 @@
+{
+  "general": [
+    {"id": "q1", "text": "Tell me about yourself.", "ideal_points": ["background", "skills", "goals"]},
+    {"id": "q2", "text": "Why are you interested in this role?", "ideal_points": ["motivation", "fit", "impact"]}
+  ],
+
+  "web developer": [
+    {"id": "q1", "text": "Tell me about your experience with web development.", "ideal_points": ["projects", "languages", "frameworks"]},
+    {"id": "q2", "text": "Which front-end and back-end technologies are you familiar with?", "ideal_points": ["HTML", "CSS", "JavaScript", "React", "Node.js"]},
+    {"id": "q3", "text": "How do you ensure your websites are secure and optimized?", "ideal_points": ["security", "performance", "SEO"]},
+    {"id": "q4", "text": "Describe a challenging web project you worked on.", "ideal_points": ["problem", "solution", "result"]}
+  ],
+
+  "data scientist": [
+    {"id": "q1", "text": "Tell me about yourself.", "ideal_points": ["background", "skills", "goals"]},
+    {"id": "q2", "text": "Which data analysis tools and languages do you use?", "ideal_points": ["Python", "R", "SQL", "Excel"]},
+    {"id": "q3", "text": "Describe a project where you extracted insights from data.", "ideal_points": ["problem", "approach", "result"]},
+    {"id": "q4", "text": "How do you validate your machine learning models?", "ideal_points": ["metrics", "cross-validation", "overfitting"]}
+  ],
+
+  "backend developer": [
+    {"id": "q1", "text": "Which backend frameworks are you experienced with?", "ideal_points": ["Node.js", "Django", "Flask", "Spring"]},
+    {"id": "q2", "text": "How do you design a RESTful API?", "ideal_points": ["routes", "methods", "status codes", "security"]},
+    {"id": "q3", "text": "Explain database normalization and why it’s important.", "ideal_points": ["1NF", "2NF", "3NF", "data integrity"]},
+    {"id": "q4", "text": "Describe a challenging backend problem you solved.", "ideal_points": ["problem", "solution", "result"]}
+  ],
+
+  "machine learning engineer": [
+    {"id": "q1", "text": "Tell me about your experience with machine learning projects.", "ideal_points": ["projects", "tools", "impact"]},
+    {"id": "q2", "text": "Which ML algorithms do you prefer and why?", "ideal_points": ["supervised", "unsupervised", "use-case selection"]},
+    {"id": "q3", "text": "How do you handle overfitting in models?", "ideal_points": ["regularization", "cross-validation", "dropout"]},
+    {"id": "q4", "text": "Explain a time your ML model failed and what you learned.", "ideal_points": ["problem", "analysis", "solution"]}
+  ],
+
+  "devops engineer": [
+    {"id": "q1", "text": "What is your experience with CI/CD pipelines?", "ideal_points": ["Jenkins", "GitLab", "automation"]},
+    {"id": "q2", "text": "How do you manage infrastructure as code?", "ideal_points": ["Terraform", "Ansible", "CloudFormation"]},
+    {"id": "q3", "text": "Describe a time you improved system reliability.", "ideal_points": ["incident", "solution", "result"]},
+    {"id": "q4", "text": "How do you monitor and alert on system performance?", "ideal_points": ["Prometheus", "Grafana", "Alertmanager"]}
+  ],
+
+  "cloud architect": [
+    {"id": "q1", "text": "Which cloud platforms have you worked with?", "ideal_points": ["AWS", "Azure", "GCP"]},
+    {"id": "q2", "text": "How do you design scalable cloud architectures?", "ideal_points": ["auto-scaling", "load balancing", "fault tolerance"]},
+    {"id": "q3", "text": "Explain a complex cloud migration you led.", "ideal_points": ["strategy", "execution", "outcome"]},
+    {"id": "q4", "text": "How do you ensure cloud security?", "ideal_points": ["IAM", "encryption", "compliance"]}
+  ],
+
+  "qa engineer": [
+    {"id": "q1", "text": "What types of testing have you performed?", "ideal_points": ["unit", "integration", "e2e"]},
+    {"id": "q2", "text": "Which testing frameworks are you familiar with?", "ideal_points": ["JUnit", "Selenium", "Cypress"]},
+    {"id": "q3", "text": "Describe a challenging bug you identified and resolved.", "ideal_points": ["issue", "debugging", "solution"]},
+    {"id": "q4", "text": "How do you ensure test coverage and quality?", "ideal_points": ["coverage tools", "best practices", "metrics"]}
+  ],
+
+  "network engineer": [
+    {"id": "q1", "text": "What networking protocols are you experienced with?", "ideal_points": ["TCP/IP", "BGP", "OSPF"]},
+    {"id": "q2", "text": "How do you troubleshoot network issues?", "ideal_points": ["ping", "traceroute", "Wireshark"]},
+    {"id": "q3", "text": "Explain a time you optimized network performance.", "ideal_points": ["problem", "solution", "result"]},
+    {"id": "q4", "text": "How do you secure network infrastructures?", "ideal_points": ["firewalls", "VPNs", "IDS/IPS"]}
+  ],
+
+  "data engineer": [
+    {"id": "q1", "text": "What ETL tools have you used?", "ideal_points": ["Apache NiFi", "Talend", "Airflow"]},
+    {"id": "q2", "text": "How do you design data pipelines?", "ideal_points": ["batch", "streaming", "scalability"]},
+    {"id": "q3", "text": "Describe a time you improved data processing efficiency.", "ideal_points": ["problem", "solution", "result"]},
+    {"id": "q4", "text": "Which databases are you proficient in?", "ideal_points": ["SQL", "NoSQL", "data warehousing"]}
+  ],
+
+  "security engineer": [
+    {"id": "q1", "text": "What security frameworks are you familiar with?", "ideal_points": ["NIST", "ISO 27001", "CIS"]},
+    {"id": "q2", "text": "How do you perform vulnerability assessments?", "ideal_points": ["tools", "methodologies", "reporting"]},
+    {"id": "q3", "text": "Describe a security incident you managed.", "ideal_points": ["incident", "response", "outcome"]},
+    {"id": "q4", "text": "How do you ensure application security?", "ideal_points": ["OWASP", "SAST/DAST", "secure coding"]}
+  ],
+
+  "ui/ux designer": [
+    {"id": "q1", "text": "What design tools do you use?", "ideal_points": ["Figma", "Sketch", "Adobe XD"]},
+    {"id": "q2", "text": "How do you conduct user research?", "ideal_points": ["interviews", "surveys", "usability testing"]},
+    {"id": "q3", "text": "Describe a project where you improved user experience.", "ideal_points": ["problem", "solution", "result"]},
+    {"id": "q4", "text": "How do you collaborate with developers?", "ideal_points": ["handoffs", "feedback", "iteration"]}
+  ],
+
+  "product manager": [
+    {"id": "q1", "text": "How do you define product vision?", "ideal_points": ["market research", "user needs", "business goals"]},
+    {"id": "q2", "text": "Describe your experience with agile methodologies.", "ideal_points": ["scrum", "kanban", "sprints"]},
+    {"id": "q3", "text": "How do you prioritize product features?", "ideal_points": ["roadmaps", "stakeholder input", "data analysis"]},
+    {"id": "q4", "text": "Explain a time you launched a successful product.", "ideal_points": ["strategy", "execution", "outcome"]}
+  ],
+
+  "site reliability engineer": [
+    {"id": "q1", "text": "What is your experience with SRE principles?", "ideal_points": ["SLIs", "SLOs", "error budgets"]},
+    {"id": "q2", "text": "How do you ensure system reliability?", "ideal_points": ["monitoring", "incident response", "postmortems"]},
+    {"id": "q3", "text": "Describe a time you improved system uptime.", "ideal_points": ["problem", "solution", "result"]},
+    {"id": "q4", "text": "How do you handle on-call duties?", "ideal_points": ["rotation", "alerting", "blameless culture"]}
+  ],
+
+  "blockchain developer": [
+    {"id": "q1", "text": "What blockchain platforms have you worked with?", "ideal_points": ["Ethereum", "Solana", "Hyperledger"]},
+    {"id": "q2", "text": "How do you ensure smart contract security?", "ideal_points": ["audits", "gas optimization", "best practices"]},
+    {"id": "q3", "text": "Describe a decentralized application you developed.", "ideal_points": ["idea", "implementation", "challenges"]},
+    {"id": "q4", "text": "How do you stay updated with blockchain trends?", "ideal_points": ["communities", "conferences", "research"]}
+  ],
+
+   
+  "mobile app developer": [
+    {
+      "id": "q1",
+      "text": "Which mobile platforms and frameworks do you specialize in?",
+      "ideal_points": ["iOS", "Android", "React Native", "Flutter"]
+    },
+    {
+      "id": "q2",
+      "text": "How do you optimize app performance?",
+      "ideal_points": ["profiling", "memory management", "UI responsiveness"]
+    },
+    {
+      "id": "q3",
+      "text": "Describe a challenging mobile app project you worked on.",
+      "ideal_points": ["problem", "solution", "result"]
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview Practice Bot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 40px;
+      background-color: #e6f7f1;
+    }
+    h1 {
+      color: #333;
+    }
+    select, button, textarea {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #d0e7ff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b0d4f0;
+    }
+    #questionContainer, #answerSection {
+      margin-top: 20px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .question-block {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .hint {
+      color: #555;
+      font-size: 14px;
+    }
+    .difficulty {
+      font-style: italic;
+      color: #888;
+      font-size: 13px;
+    }
+    #feedbackContainer {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #006400;
+    }
+    #score {
+      font-size: 16px;
+      color: #004080;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interview Practice Bot</h1>
+
+  <label for="roleSelect">Choose a role:</label>
+  <select id="roleSelect" onchange="loadQuestions()">
+    <option disabled selected>Select a role</option>
+  </select>
+
+  <div id="questionContainer"></div>
+
+  <div id="answerSection">
+    <h3>Your Answer:</h3>
+    <textarea id="userAnswer" rows="5" placeholder="Type your answer here..."></textarea>
+    <button onclick="submitAnswer()">Submit Answer</button>
+    <div id="feedbackContainer"></div>
+    <div id="score"></div>
+  </div>
+
+  <script>
+    let currentRole = "";
+    let currentQuestions = [];
+
+    async function loadRoles() {
+      try {
+        const response = await fetch("http://localhost:8000/roles");
+        const roles = await response.json();
+        const select = document.getElementById("roleSelect");
+
+        roles.forEach(role => {
+          const option = document.createElement("option");
+          option.value = role;
+          option.textContent = role;
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Failed to load roles:", error);
+      }
+    }
+
+    async function loadQuestions() {
+      currentRole = document.getElementById("roleSelect").value;
+      const response = await fetch(`http://localhost:8000/questions?role=${encodeURIComponent(currentRole)}`);
+      currentQuestions = await response.json();
+
+      const container = document.getElementById("questionContainer");
+      container.innerHTML = "<h3>Interview Questions:</h3>";
+
+      currentQuestions.forEach(q => {
+        const block = document.createElement("div");
+        block.className = "question-block";
+
+        const question = document.createElement("p");
+        question.textContent = `Q: ${q.question}`;
+        block.appendChild(question);
+
+        if (q.hint) {
+          const hint = document.createElement("p");
+          hint.className = "hint";
+          hint.textContent = `💡 Hint: ${q.hint}`;
+          block.appendChild(hint);
+        }
+
+        if (q.difficulty) {
+          const diff = document.createElement("p");
+          diff.className = "difficulty";
+          diff.textContent = `Difficulty: ${q.difficulty}`;
+          block.appendChild(diff);
+        }
+
+        container.appendChild(block);
+      });
+
+      document.getElementById("userAnswer").value = "";
+      document.getElementById("feedbackContainer").innerHTML = "";
+      document.getElementById("score").innerHTML = "";
+    }
+
+    function submitAnswer() {
+      const answer = document.getElementById("userAnswer").value.trim();
+      const feedbackBox = document.getElementById("feedbackContainer");
+      const scoreBox = document.getElementById("score");
+
+      if (!answer) {
+        feedbackBox.innerHTML = "<p style='color:red;'>Please enter an answer before submitting.</p>";
+        scoreBox.innerHTML = "";
+        return;
+      }
+
+      // Basic keyword scoring
+      const keywords = ["example", "project", "experience", "optimize", "design", "data", "security", "testing"];
+      let score = 0;
+      keywords.forEach(word => {
+        if (answer.toLowerCase().includes(word)) score += 1;
+      });
+
+      let feedback = "Good start! Try adding an example or elaborating on your points.";
+      if (score >= 5) {
+        feedback = "Excellent! Your answer is detailed and covers key concepts.";
+      } else if (score >= 3) {
+        feedback = "Solid answer. You’ve hit some important points—consider expanding further.";
+      } else {
+        feedback = "Your answer is a bit light. Try including more technical depth or examples.";
+      }
+
+      feedbackBox.innerHTML = `<p><strong>Feedback:</strong> ${feedback}</p>`;
+      scoreBox.innerHTML = `Confidence Score: ${score}/8`;
+
+      // Optional: suggest easier/harder questions based on score
+      if (score <= 2) {
+        scoreBox.innerHTML += `<br><span style="color:#aa0000;">Try a simpler question next time.</span>`;
+      } else if (score >= 6) {
+        scoreBox.innerHTML += `<br><span style="color:#008800;">Ready for a tougher challenge!</span>`;
+      }
+    }
+
+    window.onload = loadRoles;
+  </script>
+</body>
+</html>
