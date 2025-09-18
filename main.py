@@ -52,6 +52,11 @@ def default_questions(role: str) -> List[Dict[str, Any]]:
         }
     ]
 
+# New endpoint for the root URL
+@app.get("/")
+def read_root():
+    return {"message": "Hello from the Interview Bot API!"}
+
 @app.get("/roles", response_model=List[str])
 def get_roles():
     return roles
@@ -80,8 +85,7 @@ def score_answer(answer: str = Body(...)):
 @app.post("/score_multiple", response_model=Dict[str, str])
 def score_multiple(answers: List[str] = Body(...)):
     """
-    A temporary fix to ensure the frontend receives a valid JSON response.
-    This bypasses the issue with the 'score_multiple_answers' function.
+    Temporary fix for Vercel deployment to ensure a valid response.
     """
     return {
         "level": "Good",
