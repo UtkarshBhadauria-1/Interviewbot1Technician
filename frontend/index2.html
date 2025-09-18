@@ -219,6 +219,8 @@
     </div>
 
     <script>
+        const VERCEL_BACKEND_URL = 'https://interviewbot1-technician-atw1.vercel.app';
+
         let currentRole = "";
         let currentQuestions = [];
         let currentQuestionIndex = 0;
@@ -226,7 +228,7 @@
 
         async function loadRoles() {
             try {
-                const response = await fetch("http://127.0.0.1:8000/roles");
+                const response = await fetch(`${VERCEL_BACKEND_URL}/roles`);
                 const roles = await response.json();
                 const select = document.getElementById("roleSelect");
 
@@ -243,7 +245,7 @@
 
         async function loadQuestions() {
             currentRole = document.getElementById("roleSelect").value;
-            const response = await fetch(`http://localhost:8000/questions?role=${encodeURIComponent(currentRole)}`);
+            const response = await fetch(`${VERCEL_BACKEND_URL}/questions?role=${encodeURIComponent(currentRole)}`);
             currentQuestions = await response.json();
             currentQuestionIndex = 0;
             userAnswers = new Array(currentQuestions.length).fill("");
@@ -323,7 +325,7 @@
 
             try {
                 // Call the /score_multiple endpoint with all user answers
-                const response = await fetch("http://localhost:8000/score_multiple", {
+                const response = await fetch(`${VERCEL_BACKEND_URL}/score_multiple`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
