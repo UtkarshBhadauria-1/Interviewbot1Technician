@@ -1,0 +1,5 @@
+- [x] Update Model.py to include answer generation using Ollama and analysis functions
+- [x] Enhance services/scoring.py with LLM-based analysis for better feedback
+- [x] Update main.py to add endpoints for generating model answers and analyzing user answers
+- [x] Update frontend/index2.html to display model answers and detailed analysis
+- [x] Test the new functionality by running the backend and frontend

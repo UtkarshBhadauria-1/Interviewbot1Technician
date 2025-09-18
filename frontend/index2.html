@@ -1,182 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Interview Practice Bot</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 40px;
-      background-color: #e6f7f1;
-    }
-    h1 {
-      color: #333;
-    }
-    select, button, textarea {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      background-color: #d0e7ff;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #b0d4f0;
-    }
-    #questionContainer, #answerSection {
-      margin-top: 20px;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-    .question-block {
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ddd;
-    }
-    .hint {
-      color: #555;
-      font-size: 14px;
-    }
-    .difficulty {
-      font-style: italic;
-      color: #888;
-      font-size: 13px;
-    }
-    #feedbackContainer {
-      margin-top: 20px;
-      font-weight: bold;
-      color: #006400;
-    }
-    #score {
-      font-size: 16px;
-      color: #004080;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Interview Practice Bot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease forwards;
+        }
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        select, button, textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #questionContainer {
+            margin-top: 30px;
+            background-color: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        .question-block {
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .hint {
+            color: #718096;
+            font-size: 14px;
+            background-color: #edf2f7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .difficulty {
+            font-style: italic;
+            color: #a0aec0;
+            font-size: 13px;
+        }
+        #answerSection {
+            margin-top: 20px;
+            background-color: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #48bb78;
+        }
+        #progress {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        #feedbackContainer {
+            margin-top: 20px;
+            background-color: #e6fffa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #38b2ac;
+            display: none;
+        }
+        .level {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tip {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        /* Popup modal styles */
+        #popupOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #popupContent {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 500px;
+            text-align: center;
+            animation: popupFadeIn 0.3s ease forwards;
+        }
+        #popupContent p {
+            font-size: 18px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        #popupCloseBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #popupCloseBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes popupFadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-group button {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
-  <h1>Interview Practice Bot</h1>
+    <div class="container">
+        <h1>Interview Practice Bot</h1>
 
-  <label for="roleSelect">Choose a role:</label>
-  <select id="roleSelect" onchange="loadQuestions()">
-    <option disabled selected>Select a role</option>
-  </select>
+        <label for="roleSelect">Choose a role:</label>
+        <select id="roleSelect" onchange="loadQuestions()">
+            <option disabled selected>Select a role</option>
+        </select>
 
-  <div id="questionContainer"></div>
+        <div id="questionContainer" style="display: none;"></div>
 
-  <div id="answerSection">
-    <h3>Your Answer:</h3>
-    <textarea id="userAnswer" rows="5" placeholder="Type your answer here..."></textarea>
-    <button onclick="submitAnswer()">Submit Answer</button>
-    <div id="feedbackContainer"></div>
-    <div id="score"></div>
-  </div>
+        <div id="answerSection" style="display: none;">
+            <h3>Your Answer:</h3>
+            <textarea id="userAnswer" rows="6" placeholder="Type your answer here... Provide technical details, examples, and depth."></textarea>
+            <div class="btn-group">
+                <button id="prevBtn" onclick="prevQuestion()" disabled>Previous</button>
+                <button id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
 
-  <script>
-    let currentRole = "";
-    let currentQuestions = [];
+        <div id="progress"></div>
 
-    async function loadRoles() {
-      try {
-        const response = await fetch("http://localhost:8000/roles");
-        const roles = await response.json();
-        const select = document.getElementById("roleSelect");
+        <div id="feedbackContainer">
+            <div class="level" id="feedbackLevel"></div>
+            <div class="tip" id="feedbackTip"></div>
+        </div>
+    </div>
 
-        roles.forEach(role => {
-          const option = document.createElement("option");
-          option.value = role;
-          option.textContent = role;
-          select.appendChild(option);
-        });
-      } catch (error) {
-        console.error("Failed to load roles:", error);
-      }
-    }
+    <div id="popupOverlay">
+        <div id="popupContent">
+            <p id="popupMessage"></p>
+            <button id="popupCloseBtn">Close</button>
+        </div>
+    </div>
 
-    async function loadQuestions() {
-      currentRole = document.getElementById("roleSelect").value;
-      const response = await fetch(`http://localhost:8000/questions?role=${encodeURIComponent(currentRole)}`);
-      currentQuestions = await response.json();
+    <script>
+        let currentRole = "";
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
 
-      const container = document.getElementById("questionContainer");
-      container.innerHTML = "<h3>Interview Questions:</h3>";
+        async function loadRoles() {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/roles");
+                const roles = await response.json();
+                const select = document.getElementById("roleSelect");
 
-      currentQuestions.forEach(q => {
-        const block = document.createElement("div");
-        block.className = "question-block";
-
-        const question = document.createElement("p");
-        question.textContent = `Q: ${q.question}`;
-        block.appendChild(question);
-
-        if (q.hint) {
-          const hint = document.createElement("p");
-          hint.className = "hint";
-          hint.textContent = `💡 Hint: ${q.hint}`;
-          block.appendChild(hint);
+                roles.forEach(role => {
+                    const option = document.createElement("option");
+                    option.value = role;
+                    option.textContent = role;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Failed to load roles:", error);
+            }
         }
 
-        if (q.difficulty) {
-          const diff = document.createElement("p");
-          diff.className = "difficulty";
-          diff.textContent = `Difficulty: ${q.difficulty}`;
-          block.appendChild(diff);
+        async function loadQuestions() {
+            currentRole = document.getElementById("roleSelect").value;
+            const response = await fetch(`http://localhost:8000/questions?role=${encodeURIComponent(currentRole)}`);
+            currentQuestions = await response.json();
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill("");
+
+            document.getElementById("questionContainer").style.display = "block";
+            document.getElementById("answerSection").style.display = "block";
+            document.getElementById("feedbackContainer").style.display = "none";
+
+            showQuestion();
+            updateProgress();
         }
 
-        container.appendChild(block);
-      });
+        function showQuestion() {
+            const container = document.getElementById("questionContainer");
+            const q = currentQuestions[currentQuestionIndex];
 
-      document.getElementById("userAnswer").value = "";
-      document.getElementById("feedbackContainer").innerHTML = "";
-      document.getElementById("score").innerHTML = "";
-    }
+            container.innerHTML = `
+                <div class="question-block">
+                    <div class="question-text">Q${currentQuestionIndex + 1}: ${q.question}</div>
+                    ${q.hint ? `<div class="hint">💡 Hint: ${q.hint}</div>` : ''}
+                    ${q.difficulty ? `<div class="difficulty">Difficulty: ${q.difficulty}</div>` : ''}
+                </div>
+            `;
 
-    function submitAnswer() {
-      const answer = document.getElementById("userAnswer").value.trim();
-      const feedbackBox = document.getElementById("feedbackContainer");
-      const scoreBox = document.getElementById("score");
+            document.getElementById("userAnswer").value = userAnswers[currentQuestionIndex] || "";
+            updateButtons();
+        }
 
-      if (!answer) {
-        feedbackBox.innerHTML = "<p style='color:red;'>Please enter an answer before submitting.</p>";
-        scoreBox.innerHTML = "";
-        return;
-      }
+        function updateButtons() {
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
 
-      // Basic keyword scoring
-      const keywords = ["example", "project", "experience", "optimize", "design", "data", "security", "testing"];
-      let score = 0;
-      keywords.forEach(word => {
-        if (answer.toLowerCase().includes(word)) score += 1;
-      });
+            prevBtn.disabled = currentQuestionIndex === 0;
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.textContent = "Submit All";
+                nextBtn.onclick = submitAllAnswers;
+            } else {
+                nextBtn.textContent = "Next";
+                nextBtn.onclick = nextQuestion;
+            }
+        }
 
-      let feedback = "Good start! Try adding an example or elaborating on your points.";
-      if (score >= 5) {
-        feedback = "Excellent! Your answer is detailed and covers key concepts.";
-      } else if (score >= 3) {
-        feedback = "Solid answer. You’ve hit some important points—consider expanding further.";
-      } else {
-        feedback = "Your answer is a bit light. Try including more technical depth or examples.";
-      }
+        function nextQuestion() {
+            saveCurrentAnswer();
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+                updateProgress();
+            }
+        }
 
-      feedbackBox.innerHTML = `<p><strong>Feedback:</strong> ${feedback}</p>`;
-      scoreBox.innerHTML = `Confidence Score: ${score}/8`;
+        function prevQuestion() {
+            saveCurrentAnswer();
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+                updateProgress();
+            }
+        }
 
-      // Optional: suggest easier/harder questions based on score
-      if (score <= 2) {
-        scoreBox.innerHTML += `<br><span style="color:#aa0000;">Try a simpler question next time.</span>`;
-      } else if (score >= 6) {
-        scoreBox.innerHTML += `<br><span style="color:#008800;">Ready for a tougher challenge!</span>`;
-      }
-    }
+        function saveCurrentAnswer() {
+            userAnswers[currentQuestionIndex] = document.getElementById("userAnswer").value;
+        }
 
-    window.onload = loadRoles;
-  </script>
+        function updateProgress() {
+            const progress = document.getElementById("progress");
+            progress.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+        }
+
+        async function submitAllAnswers() {
+            saveCurrentAnswer();
+
+            if (userAnswers.some(answer => !answer.trim())) {
+                showPopup("Please answer all questions before submitting.");
+                return;
+            }
+
+            try {
+                // Call the /score_multiple endpoint with all user answers
+                const response = await fetch("http://localhost:8000/score_multiple", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userAnswers),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Correctly access the data properties
+                    const overallLevel = data.level;
+                    const combinedTips = data.tip;
+
+                    // Display the consolidated feedback
+                    document.getElementById("feedbackLevel").textContent = `Overall Score: ${overallLevel}`;
+                    document.getElementById("feedbackTip").textContent = combinedTips;
+                    document.getElementById("feedbackContainer").style.display = "block";
+
+                    // Hide the question and answer sections
+                    document.getElementById("questionContainer").style.display = "none";
+                    document.getElementById("answerSection").style.display = "none";
+                    document.getElementById("progress").style.display = "none";
+                } else {
+                    const errorData = await response.json();
+                    // Handle and display the backend's error message
+                    showPopup(`Error: ${errorData.detail || 'An unknown error occurred on the server.'}`);
+                }
+            } catch (error) {
+                // Handle network errors (e.g., server is down)
+                console.error("Fetch Error:", error);
+                showPopup(`Failed to connect to the backend. Please ensure the server is running. Error: ${error.message}`);
+            }
+        }
+
+        function showPopup(message) {
+            const overlay = document.getElementById("popupOverlay");
+            const popupMessage = document.getElementById("popupMessage");
+            overlay.style.display = "flex";
+            popupMessage.innerHTML = message.replace(/\n/g, '<br>');
+        }
+
+        function hidePopup() {
+            const overlay = document.getElementById("popupOverlay");
+            overlay.style.display = "none";
+        }
+
+        document.getElementById("popupCloseBtn").addEventListener("click", hidePopup);
+
+        window.onload = loadRoles;
+    </script>
 </body>
 </html>
